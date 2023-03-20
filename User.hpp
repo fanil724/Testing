@@ -15,6 +15,8 @@ private:
     uint64_t id_;
     string login_;
     string password_;
+    string name_;
+    string surname_;
 
 };
 
