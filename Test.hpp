@@ -5,6 +5,10 @@
 
 class Test {
 public:
+    Test(string name) : name_(std::move(name)) {};
+
+    ~Test() = default;
+
     void add(Quest &quest) {
         test_.push_back(quest);
     }
@@ -35,7 +39,6 @@ public:
                 std::cout << "You interrupted the test, you can resume at any time!!";
                 break;
             }
-            i->saveTest();
             i->answer(number);
         }
         ScoreCalculation();
@@ -58,8 +61,10 @@ public:
         Quest::loadTest(test_);
     }
 
+
 private:
     string name_;
+    std::vector<uint64_t> idQewst_;
     std::vector<Quest> test_;
     double gradeTest_ = 0.0;
 };
@@ -98,7 +103,6 @@ private:
     std::vector<Test> Mathematics_;
     std::vector<Test> Informatics_;
     std::vector<Test> Englisha_;
-
 };
 
 #endif // !TEST_H

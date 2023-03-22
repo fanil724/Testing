@@ -6,7 +6,7 @@
 #include <fstream>
 
 using string = std::string;
-uint64_t idQuest;
+uint64_t idQuest = 0;
 
 class Quest {
     struct Res {
@@ -19,7 +19,7 @@ class Quest {
     };
 
 public:
-    Quest();
+    Quest() = default;
 
     Quest(string quest, string answer)
             : question(Res{quest, answer}) {
@@ -88,19 +88,19 @@ public:
         if (file.is_open()) {
             while (std::getline(file, s)) {
                 int id = std::stoi(s.substr(0, s.find(":::")));
-                s.erase(0,s.find(":::")+3);
+                s.erase(0, s.find(":::") + 3);
                 string answer = s.substr(0, s.find(":::"));
-                s.erase(0,s.find(":::")+3);
+                s.erase(0, s.find(":::") + 3);
                 string quest = s.substr(0, s.find(":::"));
-                s.erase(0,s.find(":::")+3);
+                s.erase(0, s.find(":::") + 3);
                 Quest q(id, answer, quest);
                 while (!s.empty()) {
                     string option = s.substr(0, s.find(":::"));
                     q.add_answer_options(option);
-                    if(s.find(":::")==-1){
+                    if (s.find(":::") == -1) {
                         break;
                     }
-                    s.erase(0,s.find(":::")+3);
+                    s.erase(0, s.find(":::") + 3);
                 }
                 test.push_back(q);
             }
