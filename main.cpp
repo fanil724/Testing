@@ -2,5 +2,5 @@
 
 int main() {
     RunTesting r;
-    r.run();
+    r.authorization();
 }
