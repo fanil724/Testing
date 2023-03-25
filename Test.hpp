@@ -215,12 +215,29 @@ public:
         }
     }
 
+    void load() {
+        std::fstream file("Chapter.txt", std::ios::in);
+        string s;
+        if (file.is_open()) {
+            while (std::getline(file, s)) {
+                string name = s.substr(0, s.find(":::"));
+                s.erase(0, s.find(":::") + 3);
+                name_test_.push_back(name);
+            }
+        }
+        file.close();
+    }
+
     Test &getTest() {
         return testing_;
     }
 
     void LoadTest(const string &name) {
         testing_.loadTest(name);
+    }
+
+    std::vector<string> &getTestName() {
+        return name_test_;
     }
 
 private:

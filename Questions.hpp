@@ -18,7 +18,7 @@ public:
         string answer_;
         std::vector<string> reply_;
 
-        Res()=default;
+        Res() = default;
 
         Res(string quest, string answer)
                 : quest_(std::move(quest)), answer_(std::move(answer)) {};
@@ -31,6 +31,7 @@ public:
     Quest(string quest, string answer)
             : question(Res{std::move(quest), std::move(answer)}) {
         ID_ = idQuest;
+
         idQuest++;
     };
 
@@ -52,6 +53,24 @@ public:
             std::cout << number++ << ". " << i << "\n";
         }
     }
+
+    void printListQuest() {
+        string s;
+        std::fstream file("Quest.txt", std::ios::in);
+        if (file.is_open()) {
+            while (std::getline(file, s)) {
+                int id = std::stoi(s.substr(0, s.find(":::")));
+                s.erase(0, s.find(":::") + 3);
+                std::cout << "ID:" << id;
+                s.erase(0, s.find(":::") + 3);
+                string quest = s.substr(0, s.find(":::"));
+                s.erase(0, s.find(":::") + 3);
+                std::cout << "Quewst: " << quest << "\n";
+            }
+        }
+        file.close();
+    }
+
 
     [[nodiscard]]  int getIDQuest() const {
         return ID_;
@@ -111,8 +130,8 @@ public:
 protected:
     uint64_t ID_;
     Res question;
-};
 
+};
 
 
 class QuestUser : public Quest {
