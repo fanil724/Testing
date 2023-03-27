@@ -7,7 +7,7 @@
 #include <fstream>
 
 using string = std::string;
- uint64_t idQuest = 0;
+uint64_t idQuest = 0;
 
 class Quest {
 public:
@@ -42,17 +42,6 @@ public:
 
     ~Quest() = default;
 
-//    void loadQuestID() {
-//        string s;
-//        std::fstream file("Quest.txt", std::ios::in);
-//        if (file.is_open()) {
-//            while (std::getline(file, s)) {
-//                int id = std::stoi(s.substr(0, s.find(":::")));
-//                idQuest = id;
-//            }
-//        }
-//        file.close();
-//    }
 
     void add_answer_options(const string &answer) {
         question.reply_.push_back(answer);
@@ -105,7 +94,7 @@ public:
     void saveQuest() {
         std::fstream file("Quest.txt", std::ios::app);
         if (file.is_open()) {
-            file <<"\n"<< ID_ << ":::" << question.answer_ << ":::" << question.quest_;
+            file << "\n" << ID_ << ":::" << question.answer_ << ":::" << question.quest_;
             for (const auto &i: question.reply_) {
                 file << ":::" << i;
             }

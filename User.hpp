@@ -146,19 +146,6 @@ public:
         return usertest_;
     }
 
-
-//    void loadIDuser() {
-//        string s;
-//        std::fstream file("User.txt", std::ios::in);
-//        if (file.is_open()) {
-//            while (std::getline(file, s)) {
-//                uint64_t id = std::stoi(s.substr(0, s.find(":::")));
-//                iduser = id;
-//            }
-//        }
-//        file.close();
-//    }
-
     void printUser() {
         std::cout << id_ << " - " << login_ << "\n" << name_ << " " << surname_ << "\n";
         int coutn = 1;
@@ -195,7 +182,7 @@ public:
         std::fstream file("User.txt", std::ios::in);
         if (file.is_open()) {
             while (std::getline(file, s)) {
-                uint64_t id = std::stoi(s.substr(0, s.find(":::")));
+                int id = std::stoi(s.substr(0, s.find(":::")));
                 s.erase(0, s.find(":::") + 3);
                 string login = s.substr(0, s.find(":::"));
                 s.erase(0, s.find(":::") + 3);
