@@ -7,7 +7,7 @@
 #include <fstream>
 
 using string = std::string;
-uint64_t idQuest = 0;
+ uint64_t idQuest = 0;
 
 class Quest {
 public:
@@ -24,14 +24,16 @@ public:
                 : quest_(std::move(quest)), answer_(std::move(answer)) {};
     };
 
-    Quest(int id) {
+    Quest() = default;
+
+    Quest(uint64_t id) {
         loadQuest(id);
     };
 
     Quest(string quest, string answer)
             : question(Res{std::move(quest), std::move(answer)}) {
-        ID_ = idQuest;
 
+        ID_ = idQuest;
         idQuest++;
     };
 
@@ -39,6 +41,18 @@ public:
             : question(Res{std::move(quest), std::move(answer)}), ID_(id) {};
 
     ~Quest() = default;
+
+//    void loadQuestID() {
+//        string s;
+//        std::fstream file("Quest.txt", std::ios::in);
+//        if (file.is_open()) {
+//            while (std::getline(file, s)) {
+//                int id = std::stoi(s.substr(0, s.find(":::")));
+//                idQuest = id;
+//            }
+//        }
+//        file.close();
+//    }
 
     void add_answer_options(const string &answer) {
         question.reply_.push_back(answer);
@@ -91,7 +105,7 @@ public:
     void saveQuest() {
         std::fstream file("Quest.txt", std::ios::app);
         if (file.is_open()) {
-            file << ID_ << ":::" << question.answer_ << ":::" << question.quest_;
+            file <<"\n"<< ID_ << ":::" << question.answer_ << ":::" << question.quest_;
             for (const auto &i: question.reply_) {
                 file << ":::" << i;
             }
@@ -105,7 +119,7 @@ public:
         std::fstream file("Quest.txt", std::ios::in);
         if (file.is_open()) {
             while (std::getline(file, s)) {
-                int id = std::stoi(s.substr(0, s.find(":::")));
+                uint64_t id = std::stoi(s.substr(0, s.find(":::")));
                 if (id == ID) {
                     s.erase(0, s.find(":::") + 3);
                     string answer = s.substr(0, s.find(":::"));
@@ -189,7 +203,7 @@ public:
         std::fstream file("QuestUser.txt", std::ios::in);
         if (file.is_open()) {
             while (std::getline(file, s)) {
-                int id = std::stoi(s.substr(0, s.find(":::")));
+                uint64_t id = std::stoi(s.substr(0, s.find(":::")));
                 if (id == ID) {
                     s.erase(0, s.find(":::") + 3);
                     string answer = s.substr(0, s.find(":::"));
