@@ -143,7 +143,6 @@ public:
                     string quest = s.substr(0, s.find(":::"));
                     setQuest(quest);
                     s.erase(0, s.find(":::") + 3);
-
                     while (!s.empty()) {
                         string option = s.substr(0, s.find(":::"));
                         add_answer_options(option);

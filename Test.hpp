@@ -159,7 +159,7 @@ public:
         file.close();
         for (auto i: idQewst_) {
             Quest q(i);
-            test_.emplace_back(q);
+            test_.push_back(q);
         }
     }
 
