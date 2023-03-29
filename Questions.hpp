@@ -10,8 +10,9 @@ using string = std::string;
 uint64_t idQuest = 0;
 
 class Quest {
+   
 public:
-    void loadQuest();
+  
 
     struct Res {
         string quest_;
@@ -29,6 +30,20 @@ public:
     Quest(uint64_t id) {
         loadQuest(id);
     };
+
+
+    void loadIDQuest() {
+        string s;
+        std::fstream file("Quest.txt", std::ios::in);
+        if (file.is_open()) {
+            while (std::getline(file, s)) {
+                uint64_t id = std::stol(s.substr(0, s.find(":::")));
+                idQuest = id;
+            }
+        }
+        file.close();
+        idQuest++;
+    }
 
     Quest(string quest, string answer)
             : question(Res{std::move(quest), std::move(answer)}) {
@@ -56,7 +71,9 @@ public:
             std::cout << number++ << ". " << i << "\n";
         }
     }
-
+    void setID(uint64_t id) {
+        ID_ = id;
+    }
     void printListQuest() {
         string s;
         std::fstream file("Quest.txt", std::ios::in);
@@ -94,7 +111,7 @@ public:
     void saveQuest() {
         std::fstream file("Quest.txt", std::ios::app);
         if (file.is_open()) {
-            file << "\n" << ID_ << ":::" << question.answer_ << ":::" << question.quest_;
+            file <<  ID_ << ":::" << question.answer_ << ":::" << question.quest_;
             for (const auto &i: question.reply_) {
                 file << ":::" << i;
             }
@@ -108,7 +125,7 @@ public:
         std::fstream file("Quest.txt", std::ios::in);
         if (file.is_open()) {
             while (std::getline(file, s)) {
-                uint64_t id = std::stoi(s.substr(0, s.find(":::")));
+                uint64_t id = std::stol(s.substr(0, s.find(":::")));
                 if (id == ID) {
                     s.erase(0, s.find(":::") + 3);
                     string answer = s.substr(0, s.find(":::"));
@@ -192,7 +209,7 @@ public:
         std::fstream file("QuestUser.txt", std::ios::in);
         if (file.is_open()) {
             while (std::getline(file, s)) {
-                uint64_t id = std::stoi(s.substr(0, s.find(":::")));
+                uint64_t id = std::stol(s.substr(0, s.find(":::")));
                 if (id == ID) {
                     s.erase(0, s.find(":::") + 3);
                     string answer = s.substr(0, s.find(":::"));

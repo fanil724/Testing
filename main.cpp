@@ -3,5 +3,4 @@
 int main() {
     RunTesting r;
     r.authorization();
-
-}
+  }
