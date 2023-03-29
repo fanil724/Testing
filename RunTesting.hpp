@@ -65,7 +65,7 @@ public:
                                     test_.printChapter();
                                     std::cout << "Select the name of the test to which you want to add questions\n";
                                     std::cin >> num;
-                                    Test t(test_.getNameTest(num));
+                                    Test t(test_.getTestName()[num]);
                                     Quest q(0);
                                     do {
                                         q.printListQuest();
@@ -120,6 +120,7 @@ public:
         int num = 0;
         int nimberi = 1;
         do {
+            user_.loadNamTest();
             //   system("cls");
             std::cout << "1. See your previous results.\n";
             std::cout << "2. Take a new test.\n";
@@ -145,11 +146,13 @@ public:
                     test_.printChapter();
                     std::cout << "Choose test name:\n";
                     std::cin >> num;
-                    test_.LoadTest(test_.getNameTest(num - 1));
+                    test_.LoadTest(test_.getTestName()[num - 1]);
                     user_.add(test_.getTest().getname());
-                    user_.GetTest().loadTest(test_.getNameTest(num - 1));
+                    user_.GetTest().loadTest(test_.getTestName()[num - 1]);
                     user_.GetTest().BeginTest();
                     break;
+                case 3:
+                    return;
             }
         } while (true);
 

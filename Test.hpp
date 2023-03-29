@@ -16,9 +16,10 @@ public:
         idQewst_.push_back(quest.getIDQuest());
     }
 
-    void setName(const string& name){
-        name_=std::move(name);
+    void setName(const string &name) {
+        name_ = std::move(name);
     }
+
     [[nodiscard]] const string &getname() const {
         return name_;
     }
@@ -97,11 +98,7 @@ public:
     void BeginTest() {
         int number = -1;
         for (auto i = test_.begin(); i != test_.end(); i++) {
-            system("cls");
-            if (i->getanswer_given()) {
-                continue;
-            }
-            std::cout << "0. Test exit!!!!";
+            //system("cls");
             i->printQuest();
             std::cout << "Enter an answer option:";
             std::cin >> number;
@@ -138,8 +135,8 @@ public:
         return test_;
     }
 
-    void setName(const string& name) {
-        name_=std::move(name);
+    void setName(const string &name) {
+        name_ = std::move(name);
     }
 
     void loadTest(const string &nam) {
@@ -155,14 +152,14 @@ public:
                         uint64_t id = std::stoi(s.substr(0, s.find(":::")));
                         s.erase(0, s.find(":::") + 3);
                         idQewst_.push_back(id);
-                    } while (s.empty());
+                    } while (!s.empty());
                 }
             }
         }
         file.close();
         for (auto i: idQewst_) {
             Quest q(i);
-            test_.push_back(q);
+            test_.emplace_back(q);
         }
     }
 
@@ -208,10 +205,6 @@ public:
             std::cout << coutn << "." << i << "\n";
             coutn++;
         }
-    }
-
-    string &getNameTest(int index) {
-        return name_test_[index - 1];
     }
 
     void save(string test_name) {
