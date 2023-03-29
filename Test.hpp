@@ -11,7 +11,7 @@ public:
 
 	~Test() = default;
 
-	void add(Quest& quest) {
+	void add(const Quest quest) {
 		test_.push_back(quest);
 		idQewst_.push_back(quest.getIDQuest());
 	}

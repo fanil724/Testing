@@ -12,9 +12,7 @@ uint64_t idQuest = 0;
 class Quest {
    
 public:
-  
-
-    struct Res {
+      struct Res {
         string quest_;
         string answer_;
         std::vector<string> reply_;
