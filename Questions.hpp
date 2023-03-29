@@ -10,9 +10,9 @@ using string = std::string;
 uint64_t idQuest = 0;
 
 class Quest {
-   
+
 public:
-      struct Res {
+    struct Res {
         string quest_;
         string answer_;
         std::vector<string> reply_;
@@ -69,9 +69,19 @@ public:
             std::cout << number++ << ". " << i << "\n";
         }
     }
+
     void setID(uint64_t id) {
         ID_ = id;
     }
+
+    void setAnswer(string answer) {
+        question.answer_ = std::move(answer);
+    }
+
+    void setQuest(string quest) {
+        question.quest_ = std::move(quest);
+    }
+
     void printListQuest() {
         string s;
         std::fstream file("Quest.txt", std::ios::in);
@@ -109,7 +119,7 @@ public:
     void saveQuest() {
         std::fstream file("Quest.txt", std::ios::app);
         if (file.is_open()) {
-            file <<  ID_ << ":::" << question.answer_ << ":::" << question.quest_;
+            file << ID_ << ":::" << question.answer_ << ":::" << question.quest_;
             for (const auto &i: question.reply_) {
                 file << ":::" << i;
             }
@@ -125,19 +135,22 @@ public:
             while (std::getline(file, s)) {
                 uint64_t id = std::stol(s.substr(0, s.find(":::")));
                 if (id == ID) {
+                    setID(id);
                     s.erase(0, s.find(":::") + 3);
                     string answer = s.substr(0, s.find(":::"));
+                    setAnswer(answer);
                     s.erase(0, s.find(":::") + 3);
                     string quest = s.substr(0, s.find(":::"));
+                    setQuest(quest);
                     s.erase(0, s.find(":::") + 3);
-                    Quest q(id, answer, quest);
+
                     while (!s.empty()) {
                         string option = s.substr(0, s.find(":::"));
-                        q.add_answer_options(option);
+                        add_answer_options(option);
                         if (s.find(":::") == -1) {
                             break;
                         }
-                        s.erase(0, s.find(":::") + 3);
+                        s.erase(id, s.find(":::") + 3);
                     }
                 }
             }
